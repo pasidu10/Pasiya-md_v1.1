@@ -1,0 +1,35 @@
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WhatsApp QR</title>
+</head>
+<body>
+  <h1>WhatsApp Bot Link & QR</h1>
+  <input type="text" id="link" placeholder="https://wa.me/9477xxxxxxx?text=hi" size="40" />
+  <button onclick="generateQR()">Generate QR</button>
+
+  <div id="result" style="margin-top:20px;">
+    <a id="waLink" href="#" target="_blank"></a>
+    <div id="qr"></div>
+  </div>
+
+  <script>
+    async function generateQR() {
+      const link = document.getElementById('link').value.trim();
+      if (!link) return alert('Enter WhatsApp link!');
+      document.getElementById('waLink').href = link;
+      document.getElementById('waLink').textContent = link;
+      const res = await fetch('/qrcode?link=' + encodeURIComponent(link));
+      const data = await res.json();
+      document.getElementById('qr').innerHTML = `<img src="{data.qr}" alt="QR Code" />`;
+    }
+  </script>
+</body>
+</html>
+```
+
+--
